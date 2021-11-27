@@ -16,6 +16,10 @@
           <label for="exampleInputPassword1" class="form-label">Sklep</label>
           <input type="text" class="form-control" id="exampleInputPassword1">
         </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Kategoria</label>
+          <input type="text" class="form-control" id="inputCategory">
+        </div>
       </form>
         <button type="submit" class="btn btn-primary" onclick="addToShopList()">Dodaj do listy zakupów</button>
         <button type="submit" class="btn btn-primary" onclick="showShopList()">Wyświetlanie listy zakupów</button>
@@ -25,6 +29,7 @@
             <th scope="col">Id</th>
             <th scope="col">Nazwa produktu</th>
             <th scope="col">Sklep</th>
+            <th scope="col">Kategoria</th>
           </tr>
         </thead>
         <tbody id="tbody">
@@ -53,16 +58,21 @@
         let td2 = document.createElement("td");
         tr.appendChild(td2);
         td2.innerText=data[i].shopName;
+        let td3 = document.createElement("td");
+        tr.appendChild(td3);
+        td3.innerText=data[i].category;
       }
     }
 
     function addToShopList() {
       let pobranyProdukt = document.getElementById('exampleInputEmail1').value;
       let pobranySklep = document.getElementById('exampleInputPassword1').value;
+      let pobranaKategoria = document.getElementById('inputCategory').value;
 
       let daneDoWyslania = {
         name:pobranyProdukt,
-        shopName:pobranySklep
+        shopName:pobranySklep,
+        category: pobranaKategoria
       }
       fetch("http://192.168.1.106:8085/api/v1/products", {
         method: "POST",
