@@ -16,8 +16,9 @@
           <label for="exampleInputPassword1" class="form-label">Sklep</label>
           <input type="text" class="form-control" id="exampleInputPassword1">
         </div>
-        <button type="submit" class="btn btn-primary">Dodaj do listy zakupów</button>
       </form>
+        <button type="submit" class="btn btn-primary" onclick="addToShopList()">Dodaj do listy zakupów</button>
+        <button type="submit" class="btn btn-primary" onclick="showShopList()">Wyświetlanie listy zakupów</button>
       <table class="table">
         <thead>
           <tr>
@@ -40,5 +41,29 @@
         </tbody>
       </table>
     </div>
+  <script>
+    async function showShopList() {
+      const apiUrl="http://192.168.1.105:8085/api/v1/products";
+      const response= await fetch(apiUrl);
+      const data= await response.json();
+      console.log(data);
+    }
+
+    function addToShopList() {
+      let pobranyProdukt = document.getElementById('exampleInputEmail1').value;
+      let pobranySklep = document.getElementById('exampleInputPassword1').value;
+
+      let daneDoWyslania = {
+        name:pobranyProdukt,
+        shopName:pobranySklep
+      }
+      fetch("http://192.168.1.105:8085/api/v1/products", {
+        method: "POST",
+        body: JSON.stringify(daneDoWyslania),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+        .then(response => response.json());
+      }
+  </script>
   </body>
 </html>
